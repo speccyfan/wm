@@ -1,0 +1,4 @@
+wm
+==
+
+Winding machine
