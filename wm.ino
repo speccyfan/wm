@@ -8,17 +8,17 @@
 
 #define STEP_PER_MM FULLTURN2 / 0.8 //шагов на мм для шпильки M5
 
-#define HELLO_TXT "Winding machine v1.0"
-#define CLS "                    "
-const int buttonPinLeft = 10;    // pin for the Up button
-const int buttonPinRight = 13;   // pin for the Down button
-const int buttonPinEsc = 11;     // pin for the Esc button
-const int buttonPinEnter = 12;   // pin for the Enter button
-
-const int sd1 = 6;               // pin for step steps drive 1
-const int sd1d = 7;              // pin for dir steps drive 1
-const int sd2 = 8;               // pin for step steps drive 2
-const int sd2d = 9;              // pin for dir steps drive 2
+#define HELLO_TXT "Winding machine"
+#define CLS "                "
+const int buttonPinLeft = 0;    // pin for the Up button
+const int buttonPinRight = 1;   // pin for the Down button
+const int buttonPinEsc = 2;     // pin for the Esc button                                                                                     
+const int buttonPinEnter = 13;   // pin for the Enter button                                                                                  
+                                                                                                                                              
+const int sd1 = 9;               // pin for step steps drive 1                                                                                
+const int sd1d = 10;              // pin for dir steps drive 1                                                                                
+const int sd2 = 11;               // pin for step steps drive 2
+const int sd2d = 12;              // pin for dir steps drive 2
 
 int lastButtonPushed = 0;
 
@@ -33,7 +33,7 @@ long lastLeftDebounceTime = 0;  // the last time the output pin was toggled
 long lastRightDebounceTime = 0;  // the last time the output pin was toggled
 long debounceDelay = 100;    // the debounce time
 
-LiquidCrystal lcd(0, 1, 2, 3, 4, 5); //init LCD display, pins 1,2,3,4,5
+LiquidCrystal lcd(8, 7, 6, 5, 4, 3); //init LCD display, pins 1,2,3,4,5
 
 //Menu variables
 MenuBackend menu = MenuBackend(menuUsed,menuChanged);
@@ -69,13 +69,13 @@ void setup()
   pinMode(sd1d, OUTPUT);
   pinMode(sd2d, OUTPUT);
   
-  lcd.begin(20, 2);
+  lcd.begin(16, 2);
 
   //configure menu
   menu.getRoot().add(menu1Item1);
   menu1Item1.addRight(menu1Item2).addRight(menu1Item3);
   menu1Item2.add(menuItem2SubItem1).addRight(menuItem2SubItem2).addRight(menuItem2SubItem3).addRight(menuItem2SubItem4);
-  menu.toRoot();
+  //menu.toRoot();
   cls();
   lcd.setCursor(0,0);
   lcd.print(HELLO_TXT);
@@ -429,7 +429,7 @@ if (used.item.getName() == "Run"){
   cls();
   lcd.setCursor(0,0);  
   lcd.print(HELLO_TXT);
-  menu.toRoot();  //back to Main
+  //menu.toRoot();  //back to Main
 }
 
 //обработчик прерывания, тут крутим первый мотор
@@ -595,7 +595,7 @@ void navigateMenus() {
        } 
       break;
     case buttonPinEsc:
-      menu.toRoot();  //back to main
+      //menu.toRoot();  //back to main
       break;
     case buttonPinRight:
       menu.moveRight();
